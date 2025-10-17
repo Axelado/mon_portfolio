@@ -12,7 +12,8 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://simple-portfolio.vicbox.dev/',
+    site: 'https://axelado.github.io',
+    base: '/mon_portfolio',
     integrations: [mdx(), react(), tailwind({
         applyBaseStyles: false,
     }), icon(), sitemap()],
