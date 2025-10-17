@@ -1,0 +1,70 @@
+---
+title: "Conception mécatronique & contrôle d'un robot SCARA"
+startDate: 2023-10-01
+endDate: 2024-04-15
+summary: "Modélisation géométrique/cinématique/dynamique, commande, simulation en C++/Python"
+url: "https://github.com/Axelado/robot-scara"
+cover: "./images/robot-placeholder.webp"
+tags: ["C++", "Python", "Robotique", "Simulation", "Modélisation", "Commande"]
+ogImage: "/og-image.webp"
+---
+
+## Vue d'ensemble du projet
+
+Projet de conception complète d'un robot SCARA (Selective Compliance Articulated Robot Arm) réalisé dans le cadre de ma formation d'ingénieur. Ce projet s'est étalé sur 6 mois avec une équipe de 6 participants, où j'ai occupé le rôle de **Scrum Master** et **Développeur principal**.
+
+## Objectifs techniques
+
+- **Modélisation géométrique** : Établissement des modèles cinématiques directs et inverses
+- **Simulation dynamique** : Implémentation des équations de mouvement et simulation temps réel
+- **Système de commande** : Développement d'algorithmes de contrôle pour trajectoires complexes
+- **Interface utilisateur** : Création d'outils de visualisation et de commande
+
+## Technologies utilisées
+
+### Langages de programmation
+- **C++** : Développement des algorithmes de commande temps réel
+- **Python** : Scripts de simulation et interface utilisateur
+- **MATLAB** : Validation des modèles mathématiques
+
+### Outils et frameworks
+- **Simulation** : Environnement 3D pour tests virtuels
+- **Git** : Gestion de versions collaborative
+- **Documentation** : Rapport technique complet
+
+## Réalisations principales
+
+### 1. Modélisation cinématique
+```cpp
+// Exemple de calcul de cinématique inverse
+Matrix4x4 forwardKinematics(float theta1, float theta2, float d3, float theta4) {
+    // Implémentation des transformations homogènes
+    return T01 * T12 * T23 * T34;
+}
+```
+
+### 2. Algorithmes de commande
+- Commande en position avec correction d'erreur
+- Planification de trajectoires optimisées
+- Gestion des contraintes articulaires
+
+### 3. Interface de simulation
+- Visualisation 3D temps réel
+- Contrôle interactif des paramètres
+- Analyse des performances
+
+## Compétences développées
+
+- **Leadership** : Management d'équipe selon la méthodologie Scrum
+- **Modélisation mathématique** : Maîtrise des transformations géométriques
+- **Programmation temps réel** : Optimisation des performances critiques
+- **Travail collaboratif** : Coordination de 6 développeurs
+
+## Résultats obtenus
+
+✅ **Modèle fonctionnel** : Robot simulé avec précision millimétrique  
+✅ **Performance temps réel** : Boucle de commande à 100Hz  
+✅ **Documentation complète** : Rapport de 80+ pages  
+✅ **Présentation réussie** : Validation par jury d'experts
+
+Ce projet m'a permis de consolider mes compétences en robotique industrielle et en développement de systèmes complexes, préparant parfaitement mes futures expériences professionnelles.

@@ -1,0 +1,120 @@
+---
+title: "Robot mobile ROS 2 - YELLOLAB"
+startDate: 2024-04-01
+endDate: 2024-07-31
+summary: "Intégration mécatronique complète, drivers, navigation et tests sous ROS 2"
+url: "https://github.com/Axelado/yellolab-robot-ros2"
+cover: "./images/robot-placeholder.webp"
+tags: ["ROS 2", "C++", "Python", "SLAM", "Navigation", "Raspberry Pi"]
+ogImage: "/og-image.webp"
+---
+
+## Contexte du projet
+
+Stage d'ingénieur de 3 mois au **YELLOLAB INPHB** à Yamoussoukro, focalisé sur la conception complète d'un robot mobile sous ROS 2. Mission consistant à développer un système robotique autonome avec capacités de SLAM, localisation et navigation.
+
+## Objectifs du stage
+
+- **Architecture ROS 2** : Migration et modernisation vers ROS 2 Humble
+- **SLAM avancé** : Implémentation d'algorithmes de cartographie robustes  
+- **Navigation autonome** : Planification de trajectoires et évitement d'obstacles
+- **Intégration embarquée** : Développement de drivers pour Raspberry Pi et microcontrôleurs
+- **Tests terrain** : Validation dans environnements réels sous contraintes
+
+## Architecture technique
+
+### Stack logicielle
+```yaml
+# Configuration ROS 2
+ros2_packages:
+  - navigation2
+  - slam_toolbox  
+  - robot_localization
+  - tf2_geometry_msgs
+  - sensor_msgs
+```
+
+### Matériel intégré
+- **Raspberry Pi 4** : Unité de calcul principale (Ubuntu 22.04 + ROS 2 Humble)
+- **Microcontrôleurs** : ESP32 pour contrôle bas niveau
+- **Capteurs** : Lidar 2D, caméras RGB-D, IMU 9-axis, encodeurs
+- **Actionneurs** : Moteurs brushless avec drivers dédiés
+
+## Développements réalisés
+
+### 1. Architecture ROS 2 native
+```cpp
+// Node principal de navigation
+class AutonomousNavigation : public rclcpp::Node {
+public:
+    AutonomousNavigation() : Node("autonomous_navigation") {
+        // Publishers/Subscribers
+        cmd_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
+        laser_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
+            "/scan", 10, std::bind(&AutonomousNavigation::laserCallback, this, _1));
+        
+        // Navigation timer
+        navigation_timer_ = this->create_wall_timer(
+            100ms, std::bind(&AutonomousNavigation::navigationLoop, this));
+    }
+};
+```
+
+### 2. SLAM optimisé pour temps réel
+- **Algorithme** : Slam Toolbox avec optimisation de graphe
+- **Performance** : Traitement 20Hz sur données Lidar 360°
+- **Robustesse** : Gestion de fermeture de boucles automatique
+
+### 3. Système de navigation
+```python
+# Planificateur de chemin personnalisé
+def plan_path(start_pose, goal_pose, occupancy_grid):
+    """Planification optimisée A* avec contraintes dynamiques"""
+    path_planner = AStar(
+        heuristic=euclidean_distance,
+        cost_function=dynamic_cost,
+        constraints=robot_constraints
+    )
+    return path_planner.search(start_pose, goal_pose, occupancy_grid)
+```
+
+## Innovations apportées
+
+### Communication temps réel
+- **DDS** : Utilisation du middleware DDS natif de ROS 2
+- **QoS profiles** : Optimisation selon criticité des données
+- **Latence** : < 10ms pour commandes critiques
+
+### Localisation multicapteurs
+- **Fusion de données** : Kalman filter étendu (EKF)
+- **Capteurs** : Odométrie + IMU + Visual SLAM
+- **Précision** : ±2cm en environnement structuré
+
+## Résultats et performances
+
+### Métriques de performance
+| Critère | Spécification | Résultat obtenu |
+|---------|---------------|-----------------|
+| Vitesse max | 1 m/s | 1.2 m/s |
+| Précision SLAM | ±5cm | ±2cm |
+| Autonomie | 4h | 4.5h |
+
+### Validation terrain
+✅ **Navigation en extérieur** : Parcours de 500m avec obstacles  
+✅ **Cartographie bâtiment** : Mapping complet laboratoire (200m²)  
+✅ **Tests de robustesse** : 50h de fonctionnement sans défaillance  
+✅ **Démonstration finale** : Présentation aux équipes internationales
+
+## Technologies avancées utilisées
+
+- **ROS 2 Humble** : Architecture robotique nouvelle génération
+- **Navigation2** : Stack de navigation professionnelle
+- **SLAM Toolbox** : Cartographie et localisation simultanées
+- **Gazebo** : Simulation 3D pour tests préliminaires
+- **Python/C++** : Développement nodes optimisés
+
+## Impact du projet
+
+Ce stage m'a permis de maîtriser les technologies ROS 2 de pointe et de comprendre les enjeux industriels de la robotique mobile. L'expérience acquise en intégration système et validation terrain constitue un atout majeur pour mes futurs projets professionnels.
+
+**Reconnaissance** : Projet retenu comme référence pour futures collaborations YELLOLAB-UPSSITECH.

@@ -1,0 +1,158 @@
+---
+title: "Robot de désinfection COVID-19"
+startDate: 2021-02-01
+endDate: 2021-08-31
+summary: "Architecture embarquée, hydraulique, contrôle et programmation C pour désinfection automatisée"
+url: "https://github.com/Axelado/robot-desinfection-covid"
+cover: "./images/robot-placeholder.webp"
+tags: ["Arduino", "C", "Capteurs", "Actionneurs", "Hydraulique", "IoT"]
+ogImage: "/og-image.webp"
+---
+
+## Contexte et enjeux
+
+Projet développé chez **CI-Drone** pendant la pandémie COVID-19, visant à créer un robot autonome de désinfection pour espaces publics et privés. Réponse rapide aux besoins sanitaires urgents avec contraintes de délai et d'efficacité.
+
+## Cahier des charges
+
+### Exigences fonctionnelles
+- **Désinfection automatisée** : Pulvérisation contrôlée de solution désinfectante
+- **Navigation autonome** : Déplacement programmé dans zones définies
+- **Sécurité sanitaire** : Évitement des personnes et zones sensibles
+- **Monitoring** : Suivi temps réel de l'état et des performances
+
+### Contraintes techniques
+- **Autonomie** : 6h de fonctionnement continu
+- **Capacité** : Réservoir 20L de solution désinfectante
+- **Portée** : Pulvérisation efficace sur 3m de rayon
+- **Fiabilité** : Fonctionnement 24/7 possible
+
+## Architecture système
+
+### Unité de contrôle
+```c
+// Code principal Arduino - Boucle de contrôle
+void main_control_loop() {
+    // Lecture capteurs environnementaux
+    distance_sensors_data = read_ultrasonic_array();
+    presence_detected = check_human_presence();
+    
+    // Décision de navigation
+    if (!presence_detected && !obstacle_ahead()) {
+        move_forward();
+        if (should_spray_zone()) {
+            activate_spray_system();
+        }
+    } else {
+        avoid_obstacle_or_wait();
+    }
+    
+    // Monitoring système
+    send_telemetry_data();
+    delay(CONTROL_LOOP_MS);
+}
+```
+
+### Système hydraulique
+- **Pompe péristaltique** : Débit contrôlé et précis
+- **Buses de pulvérisation** : Diffusion homogène 360°
+- **Capteurs de niveau** : Monitoring réservoir en temps réel
+- **Électrovannes** : Contrôle des circuits de distribution
+
+## Modules développés
+
+### 1. Navigation intelligente
+```c
+// Algorithme d'évitement d'obstacles
+void obstacle_avoidance() {
+    int left_distance = read_sensor(LEFT_SENSOR);
+    int right_distance = read_sensor(RIGHT_SENSOR);
+    int front_distance = read_sensor(FRONT_SENSOR);
+    
+    if (front_distance < SAFE_DISTANCE) {
+        if (left_distance > right_distance) {
+            turn_left();
+        } else {
+            turn_right();
+        }
+    }
+}
+```
+
+### 2. Système de pulvérisation
+- **Contrôle PWM** : Régulation précise du débit
+- **Patterns programmables** : Zones de désinfection personnalisables
+- **Sécurité** : Arrêt automatique si présence humaine détectée
+
+### 3. Interface utilisateur
+- **Écran LCD** : Affichage état système et statistiques
+- **Contrôle WiFi** : Application mobile de monitoring
+- **Alertes** : Notifications maintenance et recharge nécessaires
+
+## Capteurs intégrés
+
+### Détection environnementale
+- **Ultrasoniques HC-SR04** : Mesure distances multidirectionnelles
+- **Capteur PIR** : Détection de présence humaine
+- **Caméra** : Vision pour reconnaissance de zones (optionnel)
+
+### Monitoring système
+```c
+// Surveillance état batterie et réservoir
+void system_monitoring() {
+    battery_voltage = analogRead(BATTERY_PIN) * VOLTAGE_DIVIDER;
+    tank_level = analogRead(TANK_SENSOR_PIN);
+    
+    if (battery_voltage < LOW_BATTERY_THRESHOLD) {
+        trigger_low_battery_alert();
+        return_to_charging_station();
+    }
+    
+    if (tank_level < LOW_TANK_THRESHOLD) {
+        trigger_refill_alert();
+        suspend_spraying_operations();
+    }
+}
+```
+
+## Innovations techniques
+
+### Dosage intelligent
+- **Algorithme adaptatif** : Ajustement débit selon surface à traiter
+- **Économie de ressources** : Optimisation consommation produit
+- **Traçabilité** : Enregistrement zones traitées et quantités utilisées
+
+### Sécurité avancée
+- **Triple détection** : Ultrason + PIR + analyse image
+- **Zones interdites** : Cartographie des espaces sensibles
+- **Arrêt d'urgence** : Bouton physique et commande à distance
+
+## Résultats opérationnels
+
+### Performance mesurée
+| Métrique | Cible | Résultat |
+|----------|-------|----------|
+| Autonomie | 6h | 6.5h |
+| Surface/h | 500m² | 650m² |
+| Précision navigation | ±50cm | ±30cm |
+| Fiabilité système | 95% | 98% |
+
+### Déploiement terrain
+✅ **Hôpitaux** : 3 établissements équipés (Abidjan)  
+✅ **Bureaux** : 15 entreprises clientes  
+✅ **Espaces publics** : Aéroport et centres commerciaux  
+✅ **Validation sanitaire** : Conformité protocoles OMS
+
+## Impact du projet
+
+### Technique
+- **Maîtrise systèmes embarqués** : Intégration complète hard/soft
+- **Programmation temps réel** : Contraintes critiques de sécurité
+- **Mécatronique** : Association mécanique, électronique, informatique
+
+### Professionnel
+- **Gestion de crise** : Développement sous contraintes sanitaires
+- **Validation terrain** : Tests en conditions réelles d'utilisation
+- **Impact social** : Contribution à la lutte contre la pandémie
+
+Ce projet a marqué une étape importante dans ma carrière, combinant urgence sociétale et défi technique, tout en consolidant mes compétences en développement de systèmes robotiques industriels.

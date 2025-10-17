@@ -1,78 +1,81 @@
 export const SITE = {
-    website: "https://simple-portfolio.vicbox.dev", // replace this with your deployed domain
-    title: "Simple Portfolio",
-    description: "A simple but beautiful portfolio created with Astro",
-    tags: ["portfolio", "Resume cv", "Astro"],
+    website: "https://mathias-axel-niato.dev", // replace this with your deployed domain
+    title: "Mathias-Axel Niato - Portfolio",
+    description: "Portfolio de Mathias-Axel Niato - Développeur Informatique Industrielle & Systèmes Embarqués",
+    tags: ["portfolio", "robotique", "systèmes embarqués", "développeur", "ingénieur"],
     ogImage: "/og-image.webp",
     logo: "logo",
-    logoText: "Portfolio",
-    lang: "en",
+    logoText: "M-A Niato",
+    lang: "fr",
     favicon: "/favicon.png",
-    repository: "https://github.com/vito8916/simple-portfolio.git",
-    author: "Victor Alvarado",
-    profile: "https://victoralvarado.dev/",
+    repository: "https://github.com/Axelado/mon_portfolio.git",
+    author: "Mathias-Axel Niato",
+    profile: "https://github.com/Axelado",
 }
 
 export const ME = {
-    name: "VicBox Dot Dev",
-    profession: "Software Engineer | Full Stack Developer",
+    name: "Mathias-Axel Niato",
+    profession: "Développeur Informatique Industrielle & Systèmes Embarqués",
     profileImage: "pp2.png",
     profileFacts: [
         {
-            value: 10,
-            description: "Years of Experience"
+            value: 3,
+            description: "Années d'expérience"
+        },
+        {
+            value: 6,
+            description: "Projets réalisés"
         },
         {
             value: 5,
-            description: "Completed Projects"
-        },
-        {
-            value: 4,
-            description: "Satisfied Clients"
+            description: "Technologies maîtrisées"
         }
     ],
     contactInfo: {
-        email: "vicbox.dev@vicbox.dev",
-        linkedin: "https://www.linkedin.com/in/victor-alvaradohn",
-        resumeDoc: "resume.pdf",
+        email: "axelniato@outlook.com",
+        linkedin: "https://www.linkedin.com/in/mathias-axel-niato",
+        resumeDoc: "cv_mathias_axel_niato.pdf",
     },
-    aboutMe: "I am a software engineer with a passion for web development. I have experience in building web " + "applications using modern technologies. I am a self-taught developer who enjoys learning new things and " + "sharing knowledge with others.",
+    aboutMe: "Ingénieur (3ᵉ année) en Systèmes Robotiques & Interactifs, orienté développement embarqué et " +
+        "informatique industrielle: C/C++, Python, FreeRTOS, intégration capteurs/actionneurs, " +
+        "communication embarquée et validation sous contraintes temps réel. Passionné par la robotique " +
+        "industrielle et mobile, avec une expertise en conception de systèmes temps réel et IoT.",
 }
 
 export const SOCIALS = [
     {
         name: "Twitter",
-        url: "https://twitter.com/vicbox.dev",
+        url: "https://twitter.com/axelniato",
         icon: "twitter-x-fill",
-        show: true
+        show: false
     },
     {
         name: "Facebook",
-        url: "https://www.facebook.com/vicbox.dev",
+        url: "https://www.facebook.com/axelniato",
         icon: "facebook-fill",
         show: false
     },
     {
         name: "Instagram",
-        url: "https://www.instagram.com/vicbox.dev",
+        url: "https://www.instagram.com/axelniato",
         icon: "instagram-fill",
-        show: true
+        show: false
     },
     {
         name: "Youtube",
-        url: "https://www.youtube.com/vicbox.dev",
+        url: "https://www.youtube.com/axelniato",
         icon: "youtube-fill",
-        show: true
+        show: false
     },
     {
         name: "TikTok",
-        url: "https://tiktok.com/vicbox.dev",
+        url: "https://tiktok.com/axelniato",
         icon: "tik-fill",
         show: false
     },
     {
         name: "GitHub",
-        url: "https://github.com/vicbox.dev",
+        url: "https://github.com/Axelado",
         icon: "github-fill",
         show: true
     }

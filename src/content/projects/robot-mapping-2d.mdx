@@ -1,0 +1,91 @@
+---
+title: "Robot de cartographie 2D intérieur"
+startDate: 2023-04-01
+endDate: 2023-05-31
+summary: "Robot mobile autonome avec Lidar, Raspberry Pi, ESP32, ROS et SLAM"
+url: "https://github.com/Axelado/robot-mapping-2d"
+cover: "./images/robot-placeholder.webp"
+tags: ["ROS", "SLAM", "Raspberry Pi", "ESP32", "Lidar", "Bluetooth", "Wi-Fi"]
+ogImage: "/og-image.webp"
+---
+
+## Vue d'ensemble du projet
+
+Développement d'un robot mobile autonome capable de cartographier des environnements intérieurs en temps réel. Projet réalisé en équipe de 7 participants sur 1 mois, avec un rôle de **Scrum Master** et **Développeur principal**.
+
+## Architecture technique
+
+### Matériel embarqué
+- **Raspberry Pi 4** : Unité de calcul principal pour ROS et SLAM
+- **ESP32** : Microcontrôleur pour contrôle moteurs et capteurs
+- **Lidar 2D** : Capteur de distance laser pour cartographie
+- **Moteurs encodeurs** : Propulsion et odométrie
+- **IMU** : Centrale inertielle pour stabilisation
+
+### Communications
+- **Wi-Fi** : Transmission des cartes vers station de contrôle
+- **Bluetooth** : Communication Raspberry Pi ↔ ESP32
+- **ROS Topics** : Architecture distribuée des données
+
+## Fonctionnalités implémentées
+
+### 1. Navigation autonome
+```python
+# Algorithme de navigation basique
+def navigate_to_goal(current_pose, goal_pose):
+    path = a_star_planning(current_pose, goal_pose, occupancy_grid)
+    for waypoint in path:
+        move_to_waypoint(waypoint)
+        avoid_obstacles()
+```
+
+### 2. SLAM (Simultaneous Localization and Mapping)
+- **Algorithme** : GMapping pour ROS
+- **Précision** : Cartographie avec résolution 5cm
+- **Temps réel** : Mise à jour à 10Hz
+
+### 3. Interface de contrôle
+- **Visualisation** : RViz pour monitoring temps réel
+- **Commandes** : Interface web pour pilotage à distance
+- **Données** : Export des cartes au format standard
+
+## Défis techniques relevés
+
+### Communication inter-processeurs
+```cpp
+// Code ESP32 pour communication Bluetooth
+void bluetoothCallback(esp_spp_cb_event_t event, esp_spp_cb_param_t *param) {
+    if (event == ESP_SPP_DATA_IND_EVT) {
+        processRobotCommand(param->data_ind.data, param->data_ind.len);
+    }
+}
+```
+
+### Optimisation temps réel
+- **Filtrage** : Kalman filter pour fusion de capteurs
+- **Performance** : Optimisation mémoire sur Raspberry Pi
+- **Stabilité** : Gestion des déconnexions réseau
+
+## Résultats du projet
+
+### Performances mesurées
+- **Surface cartographiée** : Jusqu'à 100m² en continu
+- **Précision de localisation** : ±3cm en environnement structuré  
+- **Autonomie** : 2h de fonctionnement continu
+- **Vitesse de mapping** : 0.3m/s en exploration
+
+### Livrables réalisés
+✅ **Robot fonctionnel** : Prototype opérationnel complet  
+✅ **Documentation technique** : Architecture et protocoles  
+✅ **Code source** : Repository Git avec 2000+ lignes  
+✅ **Démonstration** : Cartographie en direct d'un bâtiment
+
+## Technologies maîtrisées
+
+- **ROS (Robot Operating System)** : Architecture robotique distribuée
+- **SLAM** : Algorithmes de cartographie et localisation simultanées
+- **Programmation embarquée** : C++ sur ESP32, Python sur Raspberry Pi
+- **Communications sans fil** : Bluetooth Low Energy, Wi-Fi
+- **Gestion de projet** : Méthodologie Scrum avec équipe multiculturelle
+
+Ce projet a été une excellente introduction aux systèmes robotiques complexes et m'a préparé pour mes stages en robotique industrielle.

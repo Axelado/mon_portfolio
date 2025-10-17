@@ -1,0 +1,133 @@
+---
+author: Mathias-Axel Niato
+publishDate: 2024-07-15T10:00:00Z
+title: "Mon stage chez YELLOLAB : Développement d'un robot mobile sous ROS 2"
+tags:
+  - robotique
+  - ros2
+  - stage
+  - embedded
+description: "Retour d'expérience sur mon stage de 3 mois au YELLOLAB INPHB où j'ai développé un robot mobile complet sous ROS 2"
+cover:
+  src: './images/yellolab-experience/cover.webp'
+  alt: 'Robot mobile ROS 2 développé chez YELLOLAB'
+---
+
+## Introduction
+
+Du 1er avril au 31 juillet 2024, j'ai eu l'opportunité d'effectuer un stage de 3 mois au **YELLOLAB INPHB** à Yamoussoukro, en Côte d'Ivoire. Cette expérience m'a permis de mettre en pratique mes connaissances théoriques en robotique sur un projet concret : le développement d'un robot mobile autonome sous ROS 2.
+
+## Le contexte du projet
+
+Le YELLOLAB (Yellow Innovation Laboratory) est un laboratoire d'innovation de l'Institut National Polytechnique Félix Houphouët-Boigny, spécialisé dans le développement de solutions technologiques pour l'Afrique. Mon mission consistait à moderniser leur plateforme robotique en migrant de ROS 1 vers ROS 2 Humble.
+
+## Objectifs techniques
+
+### Migration vers ROS 2
+La première phase du projet concernait la migration de l'architecture existante :
+- **Mise à jour des packages** : Adaptation du code ROS 1 vers ROS 2 Humble
+- **Architecture distribuée** : Utilisation du middleware DDS natif
+- **Optimisation des communications** : Implémentation des profils QoS appropriés
+
+### Développement des fonctionnalités SLAM
+```cpp
+// Exemple de configuration SLAM Toolbox
+slam_params:
+  base_frame: base_link
+  odom_frame: odom
+  map_frame: map
+  scan_topic: /scan
+  use_scan_matching: true
+  map_update_interval: 5.0
+```
+
+L'intégration du SLAM (Simultaneous Localization and Mapping) était cruciale pour la navigation autonome du robot.
+
+## Défis techniques rencontrés
+
+### Intégration matérielle
+L'un des défis majeurs était l'intégration de composants hétérogènes :
+- **Raspberry Pi 4** : Unité de calcul principale
+- **Microcontrôleurs ESP32** : Contrôle bas niveau des actionneurs
+- **Capteurs variés** : Lidar, caméras, IMU, encodeurs
+
+### Optimisation temps réel
+```python
+def navigation_callback(self):
+    """Boucle de navigation optimisée pour temps réel"""
+    start_time = time.time()
+    
+    # Traitement des données capteurs
+    laser_data = self.process_lidar_data()
+    odometry = self.get_current_pose()
+    
+    # Planification de trajectoire
+    path = self.plan_path(self.current_goal, laser_data)
+    
+    # Envoi des commandes
+    self.publish_velocity_commands(path)
+    
+    # Monitoring des performances
+    processing_time = time.time() - start_time
+    if processing_time > 0.1:  # 100ms max
+        self.logger.warning(f"Slow processing: {processing_time:.3f}s")
+```
+
+### Validation terrain
+Les tests en conditions réelles ont révélé plusieurs défis :
+- **Dérive odométrique** sur longues distances
+- **Fermetures de boucles** en environnement répétitif
+- **Gestion des obstacles dynamiques**
+
+## Résultats obtenus
+
+### Performances mesurées
+Après 3 mois de développement, les résultats étaient encourageants :
+
+| Métrique | Objectif | Résultat |
+|----------|----------|----------|
+| Précision SLAM | ±5cm | ±2cm |
+| Autonomie | 4h | 4.5h |
+| Vitesse max | 1 m/s | 1.2 m/s |
+| Temps de démarrage | <30s | 18s |
+
+### Fonctionnalités implémentées
+✅ **Navigation autonome** : Déplacement goal-to-goal  
+✅ **Évitement d'obstacles** : Dynamique et statique  
+✅ **Cartographie temps réel** : SLAM avec Slam Toolbox  
+✅ **Interface de contrôle** : RViz et commandes à distance  
+✅ **Monitoring système** : Télémétrie et diagnostics
+
+## Technologies maîtrisées
+
+Cette expérience m'a permis de consolider mes compétences sur :
+- **ROS 2 Humble** : Architecture et développement de nodes
+- **Navigation2** : Stack de navigation professionnelle
+- **Gazebo** : Simulation et tests préliminaires
+- **Git/GitHub** : Collaboration et versioning
+- **Linux embarqué** : Ubuntu 22.04 sur Raspberry Pi
+
+## Impact personnel et professionnel
+
+### Compétences techniques
+Ce stage a considérablement enrichi mon profil technique :
+- **Maîtrise de ROS 2** : De la théorie à la pratique industrielle
+- **Intégration système** : Hardware/Software en conditions réelles
+- **Résolution de problèmes** : Débogage en environnement complexe
+
+### Compétences transversales
+- **Travail en équipe internationale** : Collaboration avec chercheurs ivoiriens et français
+- **Communication technique** : Rédaction de documentation et présentations
+- **Adaptabilité** : Travail dans un contexte culturel différent
+
+## Perspectives d'avenir
+
+Cette expérience au YELLOLAB m'a confirmé ma passion pour la robotique industrielle et les systèmes embarqués. Elle constitue un tremplin parfait pour mon stage actuel chez FittingBox en computer vision, créant une synergie entre robotique et intelligence artificielle.
+
+Le projet continue à évoluer au YELLOLAB, et j'espère que mon travail servira de base pour de futures collaborations entre UPSSITECH et l'INPHB.
+
+## Conclusion
+
+Ce stage m'a offert une expérience unique alliant défi technique, découverte culturelle et développement professionnel. Il illustre parfaitement comment les compétences théoriques acquises en formation d'ingénieur prennent tout leur sens dans un contexte de recherche appliquée.
+
+**Remerciements** : Merci à toute l'équipe du YELLOLAB pour leur accueil et leur encadrement, en particulier Dr. Kouassi pour la supervision technique du projet.

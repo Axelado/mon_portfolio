@@ -1,0 +1,350 @@
+---
+author: Mathias-Axel Niato
+publishDate: 2024-08-20T09:15:00Z
+title: "Développement embarqué avec FreeRTOS : Guide pratique"
+tags:
+  - freertos
+  - embedded
+  - microcontroller
+  - esp32
+description: "Guide complet pour démarrer avec FreeRTOS sur microcontrôleurs, basé sur mon expérience en développement de systèmes temps réel"
+cover:
+  src: './images/freertos-guide/cover.webp'
+  alt: 'Schéma architecture FreeRTOS'
+---
+
+## Introduction à FreeRTOS
+
+FreeRTOS (Free Real-Time Operating System) est un noyau temps réel open source conçu pour les microcontrôleurs. Au cours de mes projets en robotique et systèmes embarqués, j'ai utilisé FreeRTOS pour développer des applications complexes nécessitant un comportement déterministe et une gestion efficace des ressources.
+
+## Pourquoi choisir FreeRTOS ?
+
+### Avantages clés
+- **Temps réel** : Garanties temporelles strictes
+- **Léger** : Empreinte mémoire minimale (< 10KB)
+- **Portable** : Support de nombreuses architectures
+- **Gratuit** : Licence MIT, utilisable commercialement
+- **Mature** : Plus de 15 ans de développement
+
+### Cas d'usage typiques
+Dans mes projets, FreeRTOS s'est révélé indispensable pour :
+- **Contrôle moteur temps réel** (robot de désinfection COVID)
+- **Communication multi-protocole** (Bluetooth, WiFi, série)
+- **Acquisition de données capteurs** à fréquences multiples
+- **Interface utilisateur** non-bloquante
+
+## Architecture FreeRTOS
+
+### Concepts fondamentaux
+```c
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "freertos/semphr.h"
+
+// Définition des priorités
+#define PRIORITY_HIGH    3
+#define PRIORITY_MEDIUM  2
+#define PRIORITY_LOW     1
+
+// Tailles de pile recommandées
+#define STACK_SIZE_SMALL   1024
+#define STACK_SIZE_MEDIUM  2048
+#define STACK_SIZE_LARGE   4096
+```
+
+### Structure d'une tâche FreeRTOS
+```c
+void sensor_task(void *parameters) {
+    // Initialisation des ressources locales
+    sensor_config_t config = *(sensor_config_t*)parameters;
+    
+    while(1) {
+        // Lecture capteur
+        float temperature = read_temperature_sensor();
+        float humidity = read_humidity_sensor();
+        
+        // Traitement des données
+        sensor_data_t data = {
+            .temperature = temperature,
+            .humidity = humidity,
+            .timestamp = xTaskGetTickCount()
+        };
+        
+        // Envoi vers queue de communication
+        if(xQueueSend(sensor_queue, &data, pdMS_TO_TICKS(100)) != pdTRUE) {
+            ESP_LOGE(TAG, "Failed to send sensor data");
+        }
+        
+        // Attente déterministe
+        vTaskDelay(pdMS_TO_TICKS(1000)); // 1Hz
+    }
+}
+```
+
+## Communication inter-tâches
+
+### Queues : Communication FIFO
+```c
+// Déclaration globale
+QueueHandle_t sensor_queue;
+QueueHandle_t motor_command_queue;
+
+void init_communication() {
+    // Création des queues
+    sensor_queue = xQueueCreate(10, sizeof(sensor_data_t));
+    motor_command_queue = xQueueCreate(5, sizeof(motor_command_t));
+    
+    if(sensor_queue == NULL || motor_command_queue == NULL) {
+        ESP_LOGE(TAG, "Failed to create queues");
+        esp_restart();
+    }
+}
+
+void motor_control_task(void *parameters) {
+    motor_command_t command;
+    
+    while(1) {
+        // Attente bloquante d'une commande
+        if(xQueueReceive(motor_command_queue, &command, portMAX_DELAY)) {
+            // Exécution de la commande moteur
+            set_motor_speed(command.motor_id, command.speed);
+            set_motor_direction(command.motor_id, command.direction);
+            
+            ESP_LOGI(TAG, "Motor %d: speed=%d, dir=%d", 
+                    command.motor_id, command.speed, command.direction);
+        }
+    }
+}
+```
+
+### Sémaphores : Synchronisation et protection
+```c
+SemaphoreHandle_t spi_mutex;
+SemaphoreHandle_t data_ready_semaphore;
+
+void init_synchronization() {
+    // Mutex pour protéger le bus SPI
+    spi_mutex = xSemaphoreCreateMutex();
+    
+    // Sémaphore binaire pour signaler données prêtes
+    data_ready_semaphore = xSemaphoreCreateBinary();
+}
+
+void spi_write_protected(uint8_t device_id, uint8_t *data, size_t length) {
+    // Acquisition du mutex SPI
+    if(xSemaphoreTake(spi_mutex, pdMS_TO_TICKS(1000)) == pdTRUE) {
+        // Section critique : accès exclusif au SPI
+        spi_select_device(device_id);
+        spi_transmit(data, length);
+        spi_deselect_device(device_id);
+        
+        // Libération du mutex
+        xSemaphoreGive(spi_mutex);
+    } else {
+        ESP_LOGE(TAG, "SPI mutex timeout");
+    }
+}
+```
+
+## Gestion mémoire et optimisation
+
+### Allocation mémoire statique
+```c
+// Allocation statique pour éviter la fragmentation
+static StaticTask_t sensor_task_buffer;
+static StackType_t sensor_task_stack[2048];
+
+void create_tasks_static() {
+    TaskHandle_t sensor_handle = xTaskCreateStatic(
+        sensor_task,           // Fonction de tâche
+        "SENSOR",             // Nom pour debug
+        2048,                 // Taille de pile
+        NULL,                 // Paramètres
+        PRIORITY_MEDIUM,      // Priorité
+        sensor_task_stack,    // Buffer de pile
+        &sensor_task_buffer   // Buffer de tâche
+    );
+    
+    if(sensor_handle == NULL) {
+        ESP_LOGE(TAG, "Failed to create sensor task");
+    }
+}
+```
+
+### Monitoring des ressources
+```c
+void system_monitor_task(void *parameters) {
+    while(1) {
+        // Mémoire libre
+        size_t free_heap = esp_get_free_heap_size();
+        size_t min_free_heap = esp_get_minimum_free_heap_size();
+        
+        // État des tâches
+        UBaseType_t high_water_mark = uxTaskGetStackHighWaterMark(NULL);
+        
+        ESP_LOGI(TAG, "Free heap: %d bytes (min: %d)", free_heap, min_free_heap);
+        ESP_LOGI(TAG, "Stack high water mark: %d words", high_water_mark);
+        
+        // Vérification critique
+        if(free_heap < 10000) {
+            ESP_LOGW(TAG, "Low memory warning!");
+        }
+        
+        vTaskDelay(pdMS_TO_TICKS(5000)); // Check toutes les 5s
+    }
+}
+```
+
+## Exemple pratique : Système de contrôle robot
+
+### Architecture complète
+```c
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "esp_log.h"
+
+static const char *TAG = "ROBOT_CONTROL";
+
+// Structures de données
+typedef struct {
+    float x, y, theta;          // Position
+    uint32_t timestamp;
+} pose_t;
+
+typedef struct {
+    float linear, angular;      // Vitesses
+} velocity_t;
+
+// Handles globaux
+QueueHandle_t pose_queue;
+QueueHandle_t velocity_queue;
+TaskHandle_t navigation_task_handle;
+
+void sensors_task(void *parameters) {
+    pose_t current_pose = {0, 0, 0};
+    
+    while(1) {
+        // Lecture odométrie
+        current_pose.x += read_encoder_left() * WHEEL_CIRCUMFERENCE / ENCODER_TICKS;
+        current_pose.y += read_encoder_right() * WHEEL_CIRCUMFERENCE / ENCODER_TICKS;
+        current_pose.theta += read_gyroscope() * GYRO_SCALE;
+        current_pose.timestamp = xTaskGetTickCount();
+        
+        // Envoi position mise à jour
+        xQueueOverwrite(pose_queue, &current_pose);
+        
+        vTaskDelay(pdMS_TO_TICKS(50)); // 20Hz
+    }
+}
+
+void navigation_task(void *parameters) {
+    pose_t current_pose;
+    velocity_t target_velocity = {0, 0};
+    
+    while(1) {
+        // Réception position actuelle
+        if(xQueueReceive(pose_queue, &current_pose, pdMS_TO_TICKS(100))) {
+            // Algorithme de navigation (exemple simplifié)
+            target_velocity = calculate_navigation_velocity(&current_pose);
+            
+            // Envoi commande moteurs
+            xQueueOverwrite(velocity_queue, &target_velocity);
+        }
+        
+        vTaskDelay(pdMS_TO_TICKS(100)); // 10Hz
+    }
+}
+
+void motor_control_task(void *parameters) {
+    velocity_t velocity_command;
+    
+    while(1) {
+        if(xQueueReceive(velocity_queue, &velocity_command, portMAX_DELAY)) {
+            // Conversion vitesses en PWM moteurs
+            int16_t pwm_left = velocity_to_pwm(velocity_command.linear - velocity_command.angular);
+            int16_t pwm_right = velocity_to_pwm(velocity_command.linear + velocity_command.angular);
+            
+            // Application des commandes
+            set_motor_pwm(MOTOR_LEFT, pwm_left);
+            set_motor_pwm(MOTOR_RIGHT, pwm_right);
+            
+            ESP_LOGD(TAG, "Motors: L=%d, R=%d", pwm_left, pwm_right);
+        }
+    }
+}
+
+void app_main() {
+    ESP_LOGI(TAG, "Initializing robot control system");
+    
+    // Création des queues
+    pose_queue = xQueueCreate(1, sizeof(pose_t));
+    velocity_queue = xQueueCreate(1, sizeof(velocity_t));
+    
+    // Création des tâches
+    xTaskCreate(sensors_task, "SENSORS", 2048, NULL, 3, NULL);
+    xTaskCreate(navigation_task, "NAVIGATION", 4096, NULL, 2, &navigation_task_handle);
+    xTaskCreate(motor_control_task, "MOTORS", 2048, NULL, 2, NULL);
+    
+    ESP_LOGI(TAG, "Robot control system started");
+}
+```
+
+## Débogage et optimisation
+
+### Outils de debug
+```c
+void debug_task_info() {
+    char *task_list_buffer = malloc(2048);
+    if(task_list_buffer != NULL) {
+        vTaskList(task_list_buffer);
+        ESP_LOGI(TAG, "Task List:\n%s", task_list_buffer);
+        free(task_list_buffer);
+    }
+    
+    // Runtime stats
+    char *runtime_stats_buffer = malloc(2048);
+    if(runtime_stats_buffer != NULL) {
+        vTaskGetRunTimeStats(runtime_stats_buffer);
+        ESP_LOGI(TAG, "Runtime Stats:\n%s", runtime_stats_buffer);
+        free(runtime_stats_buffer);
+    }
+}
+```
+
+### Configuration optimale
+```c
+// Dans sdkconfig ou menuconfig
+#define configTICK_RATE_HZ              1000    // 1ms tick
+#define configMAX_PRIORITIES            25      // Priorités 0-24
+#define configMINIMAL_STACK_SIZE        512     // Stack minimum
+#define configTOTAL_HEAP_SIZE           (96*1024) // 96KB heap
+#define configUSE_TRACE_FACILITY        1       // Debug traces
+#define configGENERATE_RUN_TIME_STATS   1       // Stats runtime
+```
+
+## Bonnes pratiques
+
+### Gestion des priorités
+1. **Interruptions** : Priorité maximale (hardware)
+2. **Tâches critiques** : Communication, sécurité (priorité 4-5)
+3. **Tâches normales** : Contrôle, traitement (priorité 2-3)
+4. **Tâches background** : Logging, monitoring (priorité 1)
+
+### Éviter les pièges courants
+- **Stack overflow** : Dimensionner correctement les piles
+- **Priority inversion** : Utiliser des mutex avec héritage de priorité
+- **Starvation** : Éviter les tâches monopolisantes
+- **Deadlock** : Ordre cohérent d'acquisition des ressources
+
+## Conclusion
+
+FreeRTOS est un outil puissant pour le développement de systèmes embarqués complexes. Sa maîtrise ouvre la porte à des applications robotiques sophistiquées où le déterminisme temporel est crucial.
+
+Mon expérience sur les projets de robots mobiles et systèmes de désinfection m'a permis d'apprécier la robustesse et l'efficacité de cette solution. Pour tout développeur en systèmes embarqués, FreeRTOS représente un investissement rentable en termes de compétences.
+
+**Ressources recommandées** :
+- [FreeRTOS Official Documentation](https://www.freertos.org/Documentation/RTOS_book.html)
+- [ESP-IDF Programming Guide](https://docs.espressif.com/projects/esp-idf/)
+- [Mastering the FreeRTOS Real Time Kernel](https://www.freertos.org/Documentation/RTOS_book.html)
