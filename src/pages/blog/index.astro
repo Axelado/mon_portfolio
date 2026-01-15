@@ -1,9 +1,7 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import {getCollection} from 'astro:content';
-import {Image} from 'astro:assets';
-import ClockIcon from '@/icons/time-line.svg';
-import PostCard from "../../components/PostCard.astro";
+// Blog en mode brouillon - redirection vers 404
+return Astro.redirect('/404');
+---
 
 interface Post {
     id: string;

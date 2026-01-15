@@ -7,8 +7,9 @@ export const menu = [
         href: '/projects',
         label: 'Projects',
     },
-    {
-        href: '/blog',
-        label: 'Blog',
-    },
+    // Blog temporairement masqué (brouillon)
+    // {
+    //     href: '/blog',
+    //     label: 'Blog',
+    // },
 ]
