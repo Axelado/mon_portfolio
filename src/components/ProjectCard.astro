@@ -2,6 +2,7 @@
 // astro imports
 import { Image } from "astro:assets";
 import formatDatetime from "@/lib/formatDatetime";
+import {withBase} from "../lib/utils";
 
 interface Props {
     title: string;
@@ -16,7 +17,7 @@ const { title, tags, cover, id, startDate, endDate } = Astro.props as Props;
 const start = startDate ? formatDatetime(startDate) : undefined;
 const end = endDate ? formatDatetime(endDate) : (startDate ? "Présent" : undefined);
 ---
-<a href={`/projects/${id}`}>
+<a href={withBase(`/projects/${id}`)}>
     <div class="relative flex flex-col text-gray-700 bg-clip-border rounded-xl w-full">
         <div class="relative overflow-hidden rounded-xl h-52">
             <Image

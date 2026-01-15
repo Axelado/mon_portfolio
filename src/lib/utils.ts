@@ -25,3 +25,19 @@ export const formatDatetime = (datetime: any) => {
     month: 'short',
   });
 };
+
+/**
+ * Prefixes a path with the deployed base URL so links work on subpath hosts (e.g. GitHub Pages).
+ */
+export const withBase = (path: string) => {
+  const base = import.meta.env.BASE_URL || '/';
+
+  if (!path || path === '/') {
+    return base;
+  }
+
+  const baseClean = base === '/' ? '' : base.replace(/\/$/, '');
+  const pathClean = path.startsWith('/') ? path.slice(1) : path;
+
+  return `${baseClean}/${pathClean}`;
+};
