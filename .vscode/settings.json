@@ -1,0 +1,17 @@
+{
+    "ROS2.distro": "jazzy",
+    "python.autoComplete.extraPaths": [
+        "/home/axel/ROS/pizi_ws/build/teleop_twist_keyboard_for_azerty",
+        "/home/axel/ROS/pizi_ws/install/teleop_twist_keyboard_for_azerty/lib/python3.12/site-packages",
+        "/home/axel/ROS/pizi_ws/build/pizibot_voice",
+        "/home/axel/ROS/pizi_ws/install/pizibot_voice/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/axel/ROS/pizi_ws/build/teleop_twist_keyboard_for_azerty",
+        "/home/axel/ROS/pizi_ws/install/teleop_twist_keyboard_for_azerty/lib/python3.12/site-packages",
+        "/home/axel/ROS/pizi_ws/build/pizibot_voice",
+        "/home/axel/ROS/pizi_ws/install/pizibot_voice/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}

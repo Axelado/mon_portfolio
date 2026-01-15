@@ -6,33 +6,33 @@ interface HardSkill {
 
 const hardSkills: HardSkill[] = [
   {
-    name: "C/C++",
+    name: "C++",
     description: "Programmation embarquée et temps réel, développement de systèmes robotiques",
     icon: "tools-fill"
   },
   {
     name: "Python",
-    description: "Computer Vision avec OpenCV, développement ROS, interfaces graphiques PyQt",
+    description: "Computer Vision avec OpenCV, Machine Learning, développement ROS",
     icon: "tools-fill"
   },
   {
-    name: "FreeRTOS",
-    description: "Développement de systèmes temps réel sur microcontrôleurs",
-    icon: "time-fill"
-  },
-  {
-    name: "ROS 1/2",
-    description: "Développement de systèmes robotiques, SLAM, navigation autonome",
+    name: "ROS 2",
+    description: "Développement de systèmes robotiques, SLAM, navigation autonome, Gazebo",
     icon: "tools-fill"
   },
   {
-    name: "Systèmes Embarqués",
-    description: "ESP32, Arduino, STM32, Raspberry Pi, intégration capteurs/actionneurs",
+    name: "Vision & IA",
+    description: "OpenCV, PCL, TensorFlow, PyTorch, YOLO, traitement d'images temps réel",
     icon: "tools-fill"
   },
   {
-    name: "OpenCV",
-    description: "Computer Vision temps réel, traitement d'images, détection d'objets",
+    name: "Linux & DevOps",
+    description: "Docker, Git, CI/CD, WebSocket, TCP/IP, systèmes embarqués",
+    icon: "tools-fill"
+  },
+  {
+    name: "Intégration Système",
+    description: "Tests V&V, documentation technique, Agile/Scrum, architectures distribuées",
     icon: "tools-fill"
   }
 ];

@@ -25,6 +25,8 @@ const allProjects = (await getCollection('projects'))
                                 summary={project.data.summary}
                                 tags={project.data.tags}
                                 cover={project.data.cover}
+                            startDate={project.data.startDate}
+                            endDate={project.data.endDate}
                         />
                 ))
             }

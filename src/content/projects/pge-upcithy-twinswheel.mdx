@@ -1,0 +1,121 @@
+---
+title: "PGE UpCithy - Interaction Homme-Robot"
+startDate: 2024-09-01
+endDate: 2025-02-28
+summary: "Projet de Grande Envergure avec TwinswHeel : interaction visuelle et vocale pour robots mobiles"
+url: "https://www.upssitech.eu/project/pge-2025-upcithy/"
+cover: "./images/pge-twinswheel/cover.png"
+tags: ["IA", "Vision 3D", "Dialogue HMI", "ROS", "Python", "Chef de projet"]
+ogImage: "/og-image.webp"
+---
+
+## Contexte du projet
+
+**Projet de Grande Envergure (PGE)** réalisé en dernière année d'école d'ingénieurs à l'UPSSITECH, en collaboration avec l'entreprise **TwinswHeel**, spécialisée dans les robots mobiles autonomes pour la logistique urbaine.
+
+## Organisation et rôle
+
+### Management d'équipe
+- **Équipe** : 21 étudiants ingénieurs
+- **Rôle** : **Chef de projet** (co-direction avec un autre étudiant)
+- **Durée** : 6 mois (septembre 2024 - février 2025)
+
+### Responsabilités
+- Coordination des travaux entre les différentes équipes techniques
+- Gestion du planning et des livrables
+- Interface avec TwinswHeel (client industriel)
+- Contribution technique sur l'intégration système
+
+## Objectif du projet
+
+Développer une **solution d'interaction visuelle et vocale** permettant aux robots TwinswHeel de communiquer efficacement avec les utilisateurs (piétons, clients, opérateurs).
+
+### Problématiques adressées
+- Comment un robot autonome peut-il attirer l'attention d'un piéton ?
+- Comment communiquer une intention de mouvement ?
+- Comment recevoir et interpréter des commandes vocales ?
+- Comment s'adapter à différents contextes urbains ?
+
+## Architecture technique
+
+### Domaines couverts
+
+```yaml
+équipes_techniques:
+  - ia_perception:
+      - Détection de personnes
+      - Estimation de poses
+      - Reconnaissance d'intentions
+      
+  - vision_3d:
+      - Reconstruction environnement
+      - Localisation personnes
+      - Suivi multi-cibles
+      
+  - dialogue_hmi:
+      - Reconnaissance vocale
+      - Synthèse de parole
+      - Gestion du dialogue
+      
+  - integration:
+      - Architecture ROS
+      - Communication inter-modules
+      - Tests système
+```
+
+### Stack technologique
+
+| Domaine | Technologies |
+|---------|--------------|
+| **IA / ML** | Mediapipe, PyTorch, OpenCV |
+| **Vision 3D** | Caméras RGB-D, PCL |
+| **Audio** | Whisper, TTS, ReSpeaker |
+| **Robot** | ROS (Noetic) |
+| **Infra** | Git, CI/CD |
+
+## Contributions personnelles
+
+### 1. Gestion de projet
+```python
+# Méthodologie agile adaptée
+sprints = {
+    'durée': '2 semaines',
+    'cérémonies': ['planning', 'daily', 'review', 'retro'],
+    'outils': ['Github Project', 'Microsoft Office', 'Discord']
+}
+```
+
+### 2. Intégration système
+
+Développement de l'architecture de communication entre les différents modules :
+
+
+### 3. Tests et validation
+- Scénarios de test en environnement simulé
+- Tests terrain avec robot réel
+- Métriques de performance
+
+## Résultats obtenus
+
+### Livrables
+- ✅ Système de détection et suivi de personnes
+- ✅ Module de dialogue vocal fonctionnel
+- ✅ Interface de communication visuelle (écran, LEDs)
+- ✅ Démonstration sur robot TwinswHeel
+
+## Compétences développées
+
+### Techniques
+- **IA et Vision** : Deep learning, traitement d'images
+- **Robotique** : ROS (Noetic), intégration système
+- **Audio** : Traitement du signal, NLP
+
+### Transversales
+- **Leadership** : Gestion d'une équipe de 21 personnes
+- **Communication** : Interface client, présentations
+- **Organisation** : Planification, gestion des risques
+
+## Liens
+
+- **Page projet UPSSITECH** : [PGE 2025 UpCithy](https://www.upssitech.eu/project/pge-2025-upcithy/)
+- **TwinswHeel** : [Site officiel](https://twinswheel.com/)

@@ -44,19 +44,32 @@ interface WorkExperience {
  */
 const workExperience:WorkExperience[] = [
     {
+        title: "Ingénieur R&D en Computer Vision",
+        startDate: "2025-10-01",
+        company: "FITTINGBOX",
+        location: "Toulouse, France",
+        description: "Développement d'algorithmes de vision pour l'optique : mesure de paramètres oculaires, positionnement 3D, optimisation temps réel.",
+        goals: [
+            "Développement d'algorithmes de vision pour l'industrie optique",
+            "Mesure de paramètres oculaires sur images 2D",
+            "Positionnement 3D de lunettes virtuelles sur avatars",
+            "Optimisation temps réel des traitements vision"
+        ],
+        currentJob: true,
+    },
+    {
         title: "Ingénieur R&D en Computer Vision (Stage)",
         startDate: "2025-03-01",
         endDate: "2025-09-30",
-        company: "FittingBox",
+        company: "FITTINGBOX",
         location: "Toulouse, France",
-        description: "Développement d'outils Python temps réel pour la mesure de paramètres oculaires sur images 2D et le positionnement dynamique de lunettes sur avatars 3D.",
+        description: "Conception d'algorithmes de vision : mesure de paramètres oculaires 2D, positionnement 3D de lunettes sur avatars.",
         goals: [
             "Conception de pipelines temps réel en Python/OpenCV pour le traitement et la détection oculaire",
             "Implémentation algorithmique pour l'estimation précise de paramètres visuels",
             "Développement d'interfaces graphiques et la visualisation des résultats",
-            "Optimisation du code et synchronisation des traitements en temps réel"
         ],
-        currentJob: true,
+        currentJob: false,
     },
     {
         title: "Ingénieur Conception Robotique (Stage)",
@@ -122,7 +135,7 @@ const workExperience:WorkExperience[] = [
         title: "Responsable Projet Robotique & Électronique",
         startDate: "2020-03-01",
         endDate: "2021-10-31",
-        company: "Côte d'Ivoire Drone (CI-Drone)",
+        company: "Côte d'Ivoire Drone",
         location: "Abidjan, Côte d'Ivoire",
         description: "Pilotage d'une équipe (6 personnes) sur deux projets: robot et cabine de désinfection. Intégration embarquée, communication et essais terrain.",
         goals: [

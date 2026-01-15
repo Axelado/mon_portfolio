@@ -1,0 +1,79 @@
+---
+title: "Cabine de désinfection COVID-19"
+startDate: 2020-03-01
+endDate: 2021-10-31
+summary: "Cabine de désinfection automatisée — conception électronique et logiciel embarqué - CI-Drone"
+url: ""
+cover: "./images/covid-robot/cabine-cover.jpg"
+tags: ["Arduino", "C", "Capteurs", "Actionneurs", "Électronique", "Sécurité"]
+ogImage: "/og-image.webp"
+---
+
+## Contexte et enjeux
+
+De **mars 2020 à octobre 2021**, j'ai été **responsable** de la **cabine de désinfection COVID-19** chez la start-up **CI Drone**, proposée dans le cadre d'un appel à projets. J'ai assuré la **conception électronique** et la **programmation embarquée** de ce système.
+
+## Cahier des charges
+
+### Exigences fonctionnelles
+- **Désinfection automatisée** : Pulvérisation contrôlée de solution désinfectante
+- **Sécurité sanitaire** : Détection de présence et arrêt immédiat
+- **Cycle utilisateur** : Entrée/séquence de désinfection/sortie guidées
+- **Monitoring** : Suivi temps réel de l'état et des performances
+
+### Contraintes techniques
+- **Robustesse** : Fonctionnement intensif et maintenance simple
+- **Capacité** : Réservoir 20L de solution désinfectante
+- **Uniformité** : Couverture homogène sur l'ensemble du volume
+- **Fiabilité** : Fonctionnement 24/7 possible
+
+## Architecture système
+
+### Unité de contrôle
+
+### Système hydraulique
+- **Pompe péristaltique** : Débit contrôlé et précis
+- **Buses de pulvérisation** : Diffusion homogène 360°
+- **Capteurs de niveau** : Monitoring réservoir en temps réel
+- **Électrovannes** : Contrôle des circuits de distribution
+
+## Modules développés
+
+### 1. Cycle de désinfection
+- **Séquençage** : Début/fin de cycle avec verrouillage sécurité
+- **Ventilation** : Purge après pulvérisation
+- **Sécurité active** : Interruption immédiate si anomalie
+
+### 2. Système de pulvérisation
+- **Contrôle PWM** : Régulation précise du débit
+- **Patterns programmables** : Zones de désinfection personnalisables
+- **Sécurité** : Arrêt automatique si présence détectée hors cycle
+
+### 3. Interface utilisateur
+- **Écran LCD** : Affichage état système et instructions
+- **Contrôle** : Démarrage cycle, arrêts d'urgence
+- **Alertes** : Notifications maintenance et recharge nécessaires
+
+## Capteurs intégrés
+
+### Détection et sécurité
+- **Capteur PIR** : Détection de présence humaine
+- **Barrières IR** : Détection passage/position
+- **Capteurs porte** : Contrôle ouverture/fermeture
+
+### Monitoring système
+
+
+## Impact du projet
+
+### Technique
+- **Maîtrise systèmes embarqués** : Intégration complète hard/soft
+- **Programmation temps réel** : Contraintes critiques de sécurité
+- **Mécatronique** : Association mécanique, électronique, informatique
+
+### Professionnel
+- **Gestion de crise** : Développement sous contraintes sanitaires
+- **Validation terrain** : Tests en conditions réelles d'utilisation
+- **Impact social** : Contribution à la lutte contre la pandémie
+
+Ce projet a renforcé mes compétences en **sécurité fonctionnelle**, **intégration capteurs/actionneurs** et **conception de cycles utilisateurs** pour des systèmes critiques.

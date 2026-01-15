@@ -2,16 +2,18 @@
 title: "Robot de cartographie 2D intérieur"
 startDate: 2023-04-01
 endDate: 2023-05-31
-summary: "Robot mobile autonome avec Lidar, Raspberry Pi, ESP32, ROS et SLAM"
-url: "https://github.com/Axelado/robot-mapping-2d"
-cover: "./images/robot-placeholder.webp"
-tags: ["ROS", "SLAM", "Raspberry Pi", "ESP32", "Lidar", "Bluetooth", "Wi-Fi"]
+summary: "Robot mobile avec Lidar, Raspberry Pi, Arduino DUE, ROS et algorithme SLAM - UPSSITECH"
+url: ""
+cover: "./images/robot-mapping/cover.png"
+tags: ["ROS", "SLAM", "Raspberry Pi", "Arduino", "Lidar", "Bluetooth", "Wi-Fi", "C++", "Python"]
 ogImage: "/og-image.webp"
 ---
 
 ## Vue d'ensemble du projet
 
-Développement d'un robot mobile autonome capable de cartographier des environnements intérieurs en temps réel. Projet réalisé en équipe de 7 participants sur 1 mois, avec un rôle de **Scrum Master** et **Développeur principal**.
+**Projet de 1ère année** : Entre avril et mai 2023, j'ai participé au prototypage d'un **robot de cartographie 2D** pour l'intérieur. En tant que **Scrum Master et développeur** dans une équipe de 7 personnes.
+
+Le robot utilisait un capteur **Lidar**, des **capteurs ultrasons**, un **Raspberry Pi** et un **Arduino DUE**, avec une architecture basée sur **ROS** et un algorithme **SLAM**. La programmation a été réalisée en **C++ et Python**, avec une communication via Bluetooth et Wi-Fi.
 
 ## Architecture technique
 
@@ -29,22 +31,12 @@ Développement d'un robot mobile autonome capable de cartographier des environne
 
 ## Fonctionnalités implémentées
 
-### 1. Navigation autonome
-```python
-# Algorithme de navigation basique
-def navigate_to_goal(current_pose, goal_pose):
-    path = a_star_planning(current_pose, goal_pose, occupancy_grid)
-    for waypoint in path:
-        move_to_waypoint(waypoint)
-        avoid_obstacles()
-```
-
-### 2. SLAM (Simultaneous Localization and Mapping)
+### 1. SLAM (Simultaneous Localization and Mapping)
 - **Algorithme** : GMapping pour ROS
 - **Précision** : Cartographie avec résolution 5cm
 - **Temps réel** : Mise à jour à 10Hz
 
-### 3. Interface de contrôle
+### 2. Interface de contrôle
 - **Visualisation** : RViz pour monitoring temps réel
 - **Commandes** : Interface web pour pilotage à distance
 - **Données** : Export des cartes au format standard

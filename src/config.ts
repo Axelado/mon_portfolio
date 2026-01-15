@@ -1,8 +1,8 @@
 export const SITE = {
     website: "https://mathias-axel-niato.dev", // replace this with your deployed domain
     title: "Mathias-Axel Niato - Portfolio",
-    description: "Portfolio de Mathias-Axel Niato - Développeur Informatique Industrielle & Systèmes Embarqués",
-    tags: ["portfolio", "robotique", "systèmes embarqués", "développeur", "ingénieur"],
+    description: "Portfolio de Mathias-Axel Niato - Ingénieur en Systèmes Robotiques & Intelligence Artificielle",
+    tags: ["portfolio", "robotique", "intelligence artificielle", "computer vision", "ROS 2", "ingénieur"],
     ogImage: "/og-image.webp",
     logo: "logo",
     logoText: "M-A Niato",
@@ -15,31 +15,30 @@ export const SITE = {
 
 export const ME = {
     name: "Mathias-Axel Niato",
-    profession: "Développeur Informatique Industrielle & Systèmes Embarqués",
-    profileImage: "pp2.png",
+    profession: "Ingénieur en Systèmes Robotiques & Intelligence Artificielle",
+    profileImage: "photo.jpg",
     profileFacts: [
         {
-            value: 3,
+            value: 4,
             description: "Années d'expérience"
         },
         {
-            value: 6,
+            value: 8,
             description: "Projets réalisés"
         },
         {
-            value: 5,
+            value: 6,
             description: "Technologies maîtrisées"
         }
     ],
     contactInfo: {
         email: "axelniato@outlook.com",
-        linkedin: "https://www.linkedin.com/in/mathias-axel-niato",
+        linkedin: "https://www.linkedin.com/in/mathias-axel-niato-bb26a5166",
         resumeDoc: "cv_mathias_axel_niato.pdf",
     },
-    aboutMe: "Ingénieur (3ᵉ année) en Systèmes Robotiques & Interactifs, orienté développement embarqué et " +
-        "informatique industrielle: C/C++, Python, FreeRTOS, intégration capteurs/actionneurs, " +
-        "communication embarquée et validation sous contraintes temps réel. Passionné par la robotique " +
-        "industrielle et mobile, avec une expertise en conception de systèmes temps réel et IoT.",
+    aboutMe: "Ingénieur en robotique avec expertise en développement logiciel embarqué, ROS 2, vision par ordinateur " +
+        "et intégration de systèmes. Expérience concrète en téléopération robotique, interfaces web temps réel " +
+        "et déploiement de solutions industrielles. Maîtrise de C++, Python et des middlewares de communication.",
 }
 
 export const SOCIALS = [

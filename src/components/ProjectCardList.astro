@@ -1,6 +1,7 @@
 ---
 // astro imports
 import { Image } from 'astro:assets';
+import formatDatetime from '@/lib/formatDatetime';
 
 // library imports
 import {cn} from "../lib/utils";
@@ -11,9 +12,13 @@ interface Props {
     tags: string[];
     cover: ImageMetadata;
     id: string;
+    startDate?: Date;
+    endDate?: Date;
 }
 
-const { title, tags, cover, id } = Astro.props as Props;
+const { title, tags, cover, id, startDate, endDate } = Astro.props as Props;
+const start = startDate ? formatDatetime(startDate) : undefined;
+const end = endDate ? formatDatetime(endDate) : (startDate ? 'Présent' : undefined);
 ---
 
 <a href={`/projects/${id}`} class="project-card" aria-label={`View project "${title}"`}>
@@ -30,6 +35,11 @@ const { title, tags, cover, id } = Astro.props as Props;
             <p class="text-sm text-n500 dark:text-light-theme">
                 {tags.join(', ')}
             </p>
+            {start && (
+              <p class="text-xs text-n400 dark:text-light-theme">
+                {end ? `${start} – ${end}` : start}
+              </p>
+            )}
             <div class="flex items-center justify-between mb-2">
                 <h6 class={cn("font-semibold text-xl", "text-n500 dark:text-white")}>
                     {title}

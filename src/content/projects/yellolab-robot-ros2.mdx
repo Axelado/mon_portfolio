@@ -1,17 +1,19 @@
 ---
-title: "Robot mobile ROS 2 - YELLOLAB"
+title: "Robot mobile autonome ROS 2 - Stage YELLOLAB"
 startDate: 2024-04-01
 endDate: 2024-07-31
-summary: "Intégration mécatronique complète, drivers, navigation et tests sous ROS 2"
-url: "https://github.com/Axelado/yellolab-robot-ros2"
-cover: "./images/robot-placeholder.webp"
-tags: ["ROS 2", "C++", "Python", "SLAM", "Navigation", "Raspberry Pi"]
+summary: "Conception d'un robot mobile avec SLAM et navigation sous ROS 2 - YELLOLAB INPHB Yamoussoukro"
+url: ""
+cover: "./images/yellolab-robot/cover.png"
+tags: ["ROS 2", "C++", "Python", "SLAM", "Navigation", "Raspberry Pi", "Arduino"]
 ogImage: "/og-image.webp"
 ---
 
 ## Contexte du projet
 
-Stage d'ingénieur de 3 mois au **YELLOLAB INPHB** à Yamoussoukro, focalisé sur la conception complète d'un robot mobile sous ROS 2. Mission consistant à développer un système robotique autonome avec capacités de SLAM, localisation et navigation.
+**Stage de 2ème année** : D'avril à juillet 2024, j'ai effectué un stage au **laboratoire de fabrication numérique YelloLab de l'INPHB** à Yamoussoukro (Côte d'Ivoire), en tant qu'**ingénieur en conception robotique**.
+
+J'ai travaillé sur la conception d'un **robot mobile autonome**, intégrant des actionneurs, des capteurs et un système de navigation basé sur **ROS 2**. Le développement a été réalisé en **C++ et Python**, avec une architecture embarquée reposant sur un **Raspberry Pi** et une carte **Arduino**.
 
 ## Objectifs du stage
 
@@ -39,44 +41,6 @@ ros2_packages:
 - **Microcontrôleurs** : ESP32 pour contrôle bas niveau
 - **Capteurs** : Lidar 2D, caméras RGB-D, IMU 9-axis, encodeurs
 - **Actionneurs** : Moteurs brushless avec drivers dédiés
-
-## Développements réalisés
-
-### 1. Architecture ROS 2 native
-```cpp
-// Node principal de navigation
-class AutonomousNavigation : public rclcpp::Node {
-public:
-    AutonomousNavigation() : Node("autonomous_navigation") {
-        // Publishers/Subscribers
-        cmd_vel_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("/cmd_vel", 10);
-        laser_sub_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
-            "/scan", 10, std::bind(&AutonomousNavigation::laserCallback, this, _1));
-        
-        // Navigation timer
-        navigation_timer_ = this->create_wall_timer(
-            100ms, std::bind(&AutonomousNavigation::navigationLoop, this));
-    }
-};
-```
-
-### 2. SLAM optimisé pour temps réel
-- **Algorithme** : Slam Toolbox avec optimisation de graphe
-- **Performance** : Traitement 20Hz sur données Lidar 360°
-- **Robustesse** : Gestion de fermeture de boucles automatique
-
-### 3. Système de navigation
-```python
-# Planificateur de chemin personnalisé
-def plan_path(start_pose, goal_pose, occupancy_grid):
-    """Planification optimisée A* avec contraintes dynamiques"""
-    path_planner = AStar(
-        heuristic=euclidean_distance,
-        cost_function=dynamic_cost,
-        constraints=robot_constraints
-    )
-    return path_planner.search(start_pose, goal_pose, occupancy_grid)
-```
 
 ## Innovations apportées
 
@@ -112,9 +76,3 @@ def plan_path(start_pose, goal_pose, occupancy_grid):
 - **SLAM Toolbox** : Cartographie et localisation simultanées
 - **Gazebo** : Simulation 3D pour tests préliminaires
 - **Python/C++** : Développement nodes optimisés
-
-## Impact du projet
-
-Ce stage m'a permis de maîtriser les technologies ROS 2 de pointe et de comprendre les enjeux industriels de la robotique mobile. L'expérience acquise en intégration système et validation terrain constitue un atout majeur pour mes futurs projets professionnels.
-
-**Reconnaissance** : Projet retenu comme référence pour futures collaborations YELLOLAB-UPSSITECH.

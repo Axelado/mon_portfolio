@@ -10,13 +10,13 @@ interface Education {
 
 const  education: Education[] = [
     {
-        title: "Ingénieur en Systèmes Robotiques & Interactifs",
-        startDate: "2022-02-01",
+        title: "Diplôme d'Ingénieur en Systèmes Robotiques & Interactifs",
+        startDate: "2022-09-01",
         endDate: "2025-09-30",
         school: "UPSSITECH — Univ. Toulouse III Paul Sabatier",
         location: "Toulouse, France",
-        description: "Formation d'ingénieur spécialisée en robotique, conception logicielle, programmation embarquée et automatique. Cursus orienté vers le développement de systèmes robotiques industriels et interactifs.",
-        currentUni: true,
+        description: "Robotique autonome, vision par ordinateur, apprentissage machine, architectures logicielles embarquées, intégration système.",
+        currentUni: false,
     },
     {
         title: "Licence Électrotechnique & Automatismes Industriels — Mention Bien",

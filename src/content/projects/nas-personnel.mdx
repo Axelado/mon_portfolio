@@ -1,0 +1,76 @@
+---
+title: "NAS Personnel avec VPN WireGuard"
+startDate: 2025-03-01
+endDate: 2025-03-15
+summary: "Serveur de stockage en réseau avec OpenMediaVault et accès distant sécurisé via VPN"
+url: ""
+cover: "./images/nas-personnel/cover.png"
+tags: ["OpenMediaVault", "WireGuard", "VPN", "Linux", "Réseau", "Stockage"]
+ogImage: "/og-image.webp"
+---
+
+## Objectif du projet
+
+Mise en place d'un **serveur de stockage en réseau (NAS)** personnel permettant d'accéder à mes fichiers depuis n'importe où dans le monde, de manière sécurisée. Ce projet répond à un besoin concret de centralisation et d'accessibilité des données.
+
+## Architecture technique
+
+### Matériel réutilisé
+- **Ancien PC de bureau** reconverti en serveur
+- **Disques SSD SATA** pour le stockage performant
+- **Connexion Ethernet** pour stabilité réseau
+
+### Stack logicielle
+
+Mise en place réalisée avec **OpenMediaVault** pour l'administration du NAS et **WireGuard** pour l'accès distant sécurisé. Cette solution offre un accès local performant et un accès distant chiffré, sans exposer les détails techniques publiquement. Les étapes détaillées d'installation et de configuration peuvent être fournies sur demande.
+
+
+## Fonctionnalités
+
+### Accès universel
+- **Local** : Accès direct via SMB/NFS
+- **Distant** : Connexion VPN depuis n'importe où
+- **Multi-appareils** : PC, laptop, smartphone, tablette
+
+### Sécurité
+- **Chiffrement WireGuard** : Protocole moderne et performant
+- **Authentification** : Clés publiques/privées
+- **Isolation réseau** : Tunnel sécurisé
+
+### Services additionnels
+
+- **Portainer** : Gestion des conteneurs Docker
+- **Nextcloud** (optionnel) : Cloud personnel
+- **Syncthing** : Synchronisation P2P
+
+## Avantages de cette solution
+
+| Aspect | Bénéfice |
+|--------|----------|
+| **Coût** | Réutilisation de matériel existant |
+| **Contrôle** | Données hébergées chez moi |
+| **Performance** | Accès local ultra-rapide |
+| **Flexibilité** | Configuration personnalisée |
+| **Sécurité** | VPN chiffré de bout en bout |
+
+## Schéma réseau
+
+```
+Internet → Box → Port Forwarding (51820/UDP)
+                     ↓
+              [NAS / OpenMediaVault]
+                     ↓
+              WireGuard VPN Server
+                     ↓
+    ┌────────────────┼────────────────┐
+    ↓                ↓                ↓
+[Laptop]       [Smartphone]       [Autres]
+(10.0.0.2)      (10.0.0.3)     appareils VPN
+```
+
+## Compétences acquises
+
+- **Administration Linux** : Configuration système Debian
+- **Réseau** : VPN, port forwarding, firewall
+- **Stockage** : RAID, systèmes de fichiers, permissions
+- **Sécurité** : Chiffrement, authentification par clés
