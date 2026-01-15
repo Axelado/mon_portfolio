@@ -31,16 +31,6 @@ La première phase du projet concernait la migration de l'architecture existante
 - **Optimisation des communications** : Implémentation des profils QoS appropriés
 
 ### Développement des fonctionnalités SLAM
-```cpp
-// Exemple de configuration SLAM Toolbox
-slam_params:
-  base_frame: base_link
-  odom_frame: odom
-  map_frame: map
-  scan_topic: /scan
-  use_scan_matching: true
-  map_update_interval: 5.0
-```
 
 L'intégration du SLAM (Simultaneous Localization and Mapping) était cruciale pour la navigation autonome du robot.
 
@@ -53,27 +43,8 @@ L'un des défis majeurs était l'intégration de composants hétérogènes :
 - **Capteurs variés** : Lidar, caméras, IMU, encodeurs
 
 ### Optimisation temps réel
-```python
-def navigation_callback(self):
-    """Boucle de navigation optimisée pour temps réel"""
-    start_time = time.time()
-    
-    # Traitement des données capteurs
-    laser_data = self.process_lidar_data()
-    odometry = self.get_current_pose()
-    
-    # Planification de trajectoire
-    path = self.plan_path(self.current_goal, laser_data)
-    
-    # Envoi des commandes
-    self.publish_velocity_commands(path)
-    
-    # Monitoring des performances
-    processing_time = time.time() - start_time
-    if processing_time > 0.1:  # 100ms max
-        self.logger.warning(f"Slow processing: {processing_time:.3f}s")
-```
 
+La boucle de navigation a été optimisée pour garantir un temps de traitement inférieur à 100ms par cycle.
 ### Validation terrain
 Les tests en conditions réelles ont révélé plusieurs défis :
 - **Dérive odométrique** sur longues distances
@@ -93,11 +64,11 @@ Après 3 mois de développement, les résultats étaient encourageants :
 | Temps de démarrage | <30s | 18s |
 
 ### Fonctionnalités implémentées
-✅ **Navigation autonome** : Déplacement goal-to-goal  
-✅ **Évitement d'obstacles** : Dynamique et statique  
-✅ **Cartographie temps réel** : SLAM avec Slam Toolbox  
-✅ **Interface de contrôle** : RViz et commandes à distance  
-✅ **Monitoring système** : Télémétrie et diagnostics
+- **Navigation autonome** : Déplacement goal-to-goal  
+- **Évitement d'obstacles** : Dynamique et statique  
+- **Cartographie temps réel** : SLAM avec Slam Toolbox  
+- **Interface de contrôle** : RViz et commandes à distance  
+- **Monitoring système** : Télémétrie et diagnostics
 
 ## Technologies maîtrisées
 
