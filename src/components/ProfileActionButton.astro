@@ -2,27 +2,24 @@
 // components imports
 import { Button} from "./ui/button";
 import LinkedIn from "./icons/LinkedIn.astro";
-import DownloadArrow from "./icons/DownloadArrow.astro";
+import {Icon} from "astro-icon/components";
 
 // config import
-import { ME } from '@/config.ts';
+import { ME, SITE } from '@/config.ts';
 
-const resume = "/" + ME.contactInfo.resumeDoc;
 const {linkedin, email} = ME.contactInfo;
+const github = SITE.profile;
 ---
-<div class="profile-action-buttons w-full flex gap-2">
-    <Button
-            data-cv={resume}
-            id="cvBtn"
-            size={'lg'}
-            className="[&_svg]:size-8 px-4 md:px-8 h-14 cv-btn flex-1 text-n700 bg-primary-light dark:bg-primary-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark">
-        Download CV
-        <DownloadArrow width={24} height={24}  />
-    </Button>
+<div class="profile-action-buttons w-full flex gap-2 justify-center">
 
     <Button size="icon" className="[&_svg]:size-8 h-14 w-14 li-btn flex-none text-n700 dark:text-n200 bg-white dark:bg-black hover:bg-grey-500 dark:hover:bg-n700 transition-all">
         <a href={linkedin} aria-label="my linkedIn profile link">
             <LinkedIn width={24} height={24} />
+        </a>
+    </Button>
+    <Button size="icon" className="[&_svg]:size-8 h-14 w-14 li-btn flex-none text-n700 dark:text-n200 bg-white dark:bg-black hover:bg-grey-500 dark:hover:bg-n700 transition-all">
+        <a href={github} target="_blank" aria-label="my GitHub profile link">
+            <Icon name="github-fill" class="text-n700 dark:text-n200 w-6 h-6" />
         </a>
     </Button>
     <Button size="icon" className="[&_svg]:size-6 h-14 w-14 li-btn flex-none dark:text-n200 bg-white dark:bg-black hover:bg-grey-500 dark:hover:bg-n700 transition-all">
@@ -31,12 +28,3 @@ const {linkedin, email} = ME.contactInfo;
         </a>
     </Button>
 </div>
-
-<script>
-    const cvBtn = document.getElementById('cvBtn') as HTMLButtonElement;
-    const resume = cvBtn.dataset.cv;
-
-    cvBtn.addEventListener('click', () => {
-        window.open(resume, '_blank');
-    })
-</script>
