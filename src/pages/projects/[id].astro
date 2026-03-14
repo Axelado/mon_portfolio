@@ -19,6 +19,7 @@ const { post } = Astro.props;
 const { title, summary, tags, cover, ogImage, url, startDate, endDate } = post.data;
 const start = startDate ? formatDatetime(startDate) : undefined;
 const end = endDate ? formatDatetime(endDate) : (startDate ? 'Présent' : undefined);
+const projectLinkLabel = url?.includes('github.com') ? 'Lien GitHub ↗' : 'Lien du projet ↗';
 
 const { Content } = await render(post);
 
@@ -43,15 +44,16 @@ const { Content } = await render(post);
         <p>
             {summary}
         </p>
-        {url && (
-            <a href={url} rel="noreferrer" target="_blank">
-                Voir le projet ↗
-            </a>
-        )}
 
         <article id="article" class="mt-8 prose dark:prose-invert">
             <Content/>
         </article>
+
+        {url && (
+            <a href={url} rel="noreferrer" target="_blank">
+                {projectLinkLabel}
+            </a>
+        )}
 
         <div
             id="project-image-lightbox"
