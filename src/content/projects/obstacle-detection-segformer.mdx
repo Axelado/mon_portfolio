@@ -15,6 +15,14 @@ L'objectif de ce projet était de construire une pipeline de **segmentation sém
 
 Au-delà du modèle lui-même, je voulais surtout mettre en place une base d'expérimentation propre et reproductible, afin de comparer les runs de manière rigoureuse et de mieux comprendre les limites du système.
 
+## Captures
+
+![Segmentation result](./images/semanctic-segmentation/segmentation_result.png)
+
+![Ground truth mask](./images/semanctic-segmentation/mask.png)
+
+![IoU metrics](./images/semanctic-segmentation/metrics_iou_ground_vs_iou_osbt.png)
+
 ## Objectifs techniques
 
 - Adapter un backbone `SegFormer` préentraîné à un problème binaire **sol / obstacle**
@@ -88,11 +96,3 @@ L'un des points les plus formateurs a été de passer d'expérimentations ponctu
 - Pipeline complet opérationnel pour entraînement, évaluation et visualisation
 - Base expérimentale réutilisable pour comparer plusieurs variantes de segmentation
 - Meilleure compréhension pratique des compromis entre qualité de masque, robustesse et reproductibilité
-
-## Captures
-
-![Segmentation result](./images/semanctic-segmentation/segmentation_result.png)
-
-![Ground truth mask](./images/semanctic-segmentation/mask.png)
-
-![IoU metrics](./images/semanctic-segmentation/metrics_iou_ground_vs_iou_osbt.png)

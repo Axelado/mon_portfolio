@@ -87,6 +87,54 @@ const { Content } = await render(post);
                     return;
                 }
 
+                const setupCaptureGrids = (articleElement: HTMLElement) => {
+                    if (articleElement.dataset.captureGridReady === "true") {
+                        return;
+                    }
+
+                    const captureHeadings = Array.from(articleElement.querySelectorAll<HTMLHeadingElement>("h2, h3"))
+                        .filter((heading) => {
+                            const headingText = heading.textContent?.trim().toLowerCase() || "";
+                            return headingText === "captures" || headingText === "captures du projet";
+                        });
+
+                    captureHeadings.forEach((heading) => {
+                        if (heading.nextElementSibling?.classList.contains("project-captures-grid")) {
+                            return;
+                        }
+
+                        const grid = document.createElement("div");
+                        grid.className = "project-captures-grid";
+
+                        let sibling = heading.nextElementSibling;
+                        while (sibling) {
+                            if (/^H[1-6]$/.test(sibling.tagName)) {
+                                break;
+                            }
+
+                            const nextSibling = sibling.nextElementSibling;
+                            const directImage = sibling.tagName === "P"
+                                ? sibling.querySelector<HTMLImageElement>(":scope > img")
+                                : null;
+
+                            if (directImage && sibling.children.length === 1) {
+                                sibling.classList.add("project-capture-item");
+                                grid.appendChild(sibling);
+                            }
+
+                            sibling = nextSibling;
+                        }
+
+                        if (grid.children.length > 0) {
+                            heading.insertAdjacentElement("afterend", grid);
+                        }
+                    });
+
+                    articleElement.dataset.captureGridReady = "true";
+                };
+
+                setupCaptureGrids(article);
+
                 if (article.dataset.lightboxReady === "true") {
                     return;
                 }
@@ -141,6 +189,18 @@ const { Content } = await render(post);
 <style is:global>
     h2 {
         @apply text-2xl font-bold my-4;
+    }
+
+    #article .project-captures-grid {
+        @apply grid grid-cols-1 md:grid-cols-2 gap-4 my-6;
+    }
+
+    #article .project-captures-grid .project-capture-item {
+        @apply m-0;
+    }
+
+    #article .project-captures-grid .project-capture-item img {
+        @apply w-full h-auto;
     }
 </style>
 
