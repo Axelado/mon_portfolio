@@ -7,8 +7,22 @@ import ProjectCard from "./ProjectCard.astro";
 import {buttonVariants} from "./ui/button";
 import {withBase} from "../lib/utils";
 
-const allProjects = (await getCollection('projects', ({ data }) => data.listed !== false))
-    .sort((a, b) => b.data.startDate.getTime() - a.data.startDate.getTime());;
+const pinnedSlugs = [
+    'integration-hc10-kinect',
+    'robot-scara',
+    'pge-upcithy-twinswheel',
+    'yellolab-robot-ros2',
+    'robot-mapping-2d',
+];
+
+const projects = (await getCollection('projects', ({ data }) => data.listed !== false))
+    .sort((a, b) => b.data.startDate.getTime() - a.data.startDate.getTime());
+
+const pinned = pinnedSlugs
+    .map(slug => projects.find(p => p.id === slug))
+    .filter(Boolean);
+const rest = projects.filter(p => !pinnedSlugs.includes(p.id));
+const allProjects = [...pinned, ...rest];
 ---
 
 <!--Grid section to show the projects in to columns -->

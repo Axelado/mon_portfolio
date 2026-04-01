@@ -15,8 +15,22 @@ interface Project {
     };
 }
 
-const allProjects = (await getCollection('projects', ({ data }) => data.listed !== false))
+const pinnedSlugs = [
+    'integration-hc10-kinect',
+    'robot-scara',
+    'pge-upcithy-twinswheel',
+    'yellolab-robot-ros2',
+    'robot-mapping-2d',
+];
+
+const projects = (await getCollection('projects', ({ data }) => data.listed !== false))
     .sort((a, b) => b.data.startDate.getTime() - a.data.startDate.getTime());
+
+const pinned = pinnedSlugs
+    .map(slug => projects.find(p => p.id === slug))
+    .filter(Boolean);
+const rest = projects.filter(p => !pinnedSlugs.includes(p.id));
+const allProjects = [...pinned, ...rest];
 ---
 
 <Layout title="Mathias-Axel Niato | Mes Projets" description="Liste de mes projets en robotique, IA et systèmes embarqués" scrollSmooth={false}>
