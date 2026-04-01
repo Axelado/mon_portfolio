@@ -7,7 +7,7 @@ import ProjectCard from "./ProjectCard.astro";
 import {buttonVariants} from "./ui/button";
 import {withBase} from "../lib/utils";
 
-const allProjects = (await getCollection('projects'))
+const allProjects = (await getCollection('projects', ({ data }) => data.listed !== false))
     .sort((a, b) => b.data.startDate.getTime() - a.data.startDate.getTime());;
 ---
 
